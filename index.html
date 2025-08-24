@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpendSense — Expense Tracker + Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="description" content="A clean expense tracker with a built-in chatbot. Now with PHP + MySQL backend." />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-badge"><span>₹</span></div>
+                <div>
+                    <h1>SpendSense <span class="badge">PHP + MySQL Backend</span></h1>
+                    <div class="pill">Expense Tracker with Chatbot · Full CRUD</div>
+                </div>
+            </div>
+            <div class="pill" id="monthLabel"></div>
+        </header>
+
+        <div class="grid">
+            <section class="card">
+                <div class="hd">
+                    <h3>Add Expense</h3>
+                    <button class="secondary" id="demoBtn" title="Load sample data">Load Demo</button>
+                </div>
+                <div class="bd">
+                    <form id="expenseForm" class="form">
+                        <div class="field">
+                            <label>Amount (₹)</label>
+                            <input type="number" min="0" id="amount" required placeholder="e.g., 30.0">
+                        </div>
+                        <div class="field wide">
+                            <label>Category</label>
+                            <select id="category" required>
+                                <option value="Food">Food</option>
+                                <option value="Transport">Transport</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Health">Health</option>
+                                <option value="Education">Education</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="field date">
+                            <label>Date</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <div class="field notes">
+                            <label>Notes</label>
+                            <input type="text" id="notes" placeholder="e.g., Pizza with friends">
+                        </div>
+                        <div class="field">
+                            <label>&nbsp;</label>
+                            <button type="submit">Add</button>
+                        </div>
+                        <div class="field">
+                            <label>&nbsp;</label>
+                            <button type="button" class="secondary" id="clearBtn">Clear All</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="hd">
+                    <h3>Overview</h3>
+                    <span class="badge" id="itemsCount">0 items</span>
+                </div>
+                <div class="bd">
+                    <div class="stat-row">
+                        <div class="stat"><div class="k">This month</div><div class="v" id="sumMonth">₹0</div></div>
+                        <div class="stat"><div class="k">Today</div><div class="v" id="sumToday">₹0</div></div>
+                        <div class="stat"><div class="k">Largest</div><div class="v" id="maxTxn">₹0</div></div>
+                    </div>
+                    <canvas id="catChart" style="margin-top:16px;height:280px"></canvas>
+                </div>
+            </section>
+
+            <section class="card" style="grid-column:1 / -1">
+                <div class="hd">
+                    <h3>Transactions</h3>
+                    <div class="pill">Click a row to edit · ⌫ to delete</div>
+                </div>
+                <div class="bd" id="tableWrap">
+                    <div class="empty">No expenses yet. Add some above or ask the chatbot: <span class="chip">add 120 food pizza</span></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chat-fab" id="chatFab" title="Open chatbot">🤖</div>
+    <div class="chat-panel" id="chatPanel" aria-hidden="true">
+        <div class="chat-hd">
+            <div class="chat-title"><div class="dot"></div><strong style="letter-spacing:.3px">SpendBot</strong><span class="badge">PHP Powered</span></div>
+            <button class="secondary" id="closeChat" style="width:auto;padding:8px 10px">Close</button>
+        </div>
+        <div class="chat-body" id="chatBody"></div>
+        <div class="chips" id="suggestChips"></div>
+        <div class="chat-input">
+            <input id="chatInput" placeholder="Try: add 250 food burger" />
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
